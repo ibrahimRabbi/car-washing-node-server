@@ -4,5 +4,6 @@ export type Tuser = {
     password: string,
     phone: string,
     role: "user" | "admin",
-    address:string
+    address: string,
+    isDeleted:boolean
 }

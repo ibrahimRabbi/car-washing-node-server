@@ -8,7 +8,7 @@ const serviceSchema = new Schema<Tservice>({
     price: { type: Number, required: true, trim: true },
     duration: { type: Number, required: true, trim: true },
     isdeleted: { type: Boolean, default: false }
-})
+},{timestamps:true})
 
 
 // serviceSchema.pre('save', async function (next) {

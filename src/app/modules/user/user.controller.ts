@@ -8,9 +8,9 @@ export const createUserController = async (req: Request, res: Response, next: Ne
         const inserted = await userSignupService(req.body)
         res.status(statusCode).json({
             success: true,
-            statusCode:statusCode,
+            statusCode: statusCode,
             message: "user signup successfully",
-            data:inserted
+            data: inserted
         })
     } catch (err: any) {
         next(err)

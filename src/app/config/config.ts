@@ -8,7 +8,8 @@ env.config({
 
 const envData = {
     port: process.env.PORT,
-    database_url: process.env.DATABASE_URL
+    database_url: process.env.DATABASE_URL,
+    secret_key: process.env.JWT_SECRET_KEY
 }
 
 

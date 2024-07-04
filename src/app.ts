@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import { userRoute } from './app/modules/user/user.route';
 import globalErrorHandler from './app/error/globalErrorHandler';
 import notFound from './app/error/notFoundError';
+import { serviceRoute } from './app/modules/services/services.route';
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use(express.json())
 
 //routes
 app.use('/api/auth', userRoute)
+app.use('/api/services',serviceRoute)
 
 
 //error handler

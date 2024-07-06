@@ -5,4 +5,4 @@ import authentication from "../../middleware/authentication";
 
 export const slotRoute = Router()
 
-slotRoute.post('/slot',slotValidation, authentication, createSlotController)
+slotRoute.post('/slots',slotValidation, authentication, createSlotController)

@@ -6,7 +6,7 @@ const slotSchema = new Schema<Tslot>({
     date: { type: Date, required: true },
     startTime: { type: String, required: true, trim: true },
     endTime: { type: String, required: true, trim: true },
-    isBooked: { type: Boolean, default: true }
-})
+    isBooked: { type: String, enum: ['available', 'full-fill'], default: 'available' }
+}, { timestamps: true })
 
 export const soltModel = model<Tslot>('timeSlot', slotSchema)

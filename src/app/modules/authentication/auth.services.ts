@@ -20,8 +20,10 @@ export const authService = async (payload: Partial<Tuser>) => {
         throw new Error('forbidden user')
     }
 
+    
+    
     if (!unpackPass) {
-        throw new Error('wrong password')
+        throw new Error('invalid password')
     }
 
 

@@ -7,4 +7,4 @@ export const userRoute = Router()
 
 userRoute.post('/signup', signupMiddleware, createUserController)
 
-userRoute.post('/sign-in', authController)
+userRoute.post('/signin', authController)

@@ -8,6 +8,7 @@ const schema = Joi.object({
     role: Joi.string().valid('user', 'admin').required(),
     phone: Joi.string().required().max(11),
     address: Joi.string().required(),
+    isDeleted:Joi.boolean().default(false)
 })
 
 

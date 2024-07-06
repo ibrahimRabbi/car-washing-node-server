@@ -6,6 +6,7 @@ import { userRoute } from './app/modules/user/user.route';
 import globalErrorHandler from './app/error/globalErrorHandler';
 import notFound from './app/error/notFoundError';
 import { serviceRoute } from './app/modules/services/services.route';
+import { slotRoute } from './app/modules/timeSlot/slot.route';
 
 const app = express()
 
@@ -16,7 +17,8 @@ app.use(express.json())
 
 //routes
 app.use('/api/auth', userRoute)
-app.use('/api/services',serviceRoute)
+app.use('/api/services', serviceRoute)
+app.use('/api/services', slotRoute)
 
 
 //error handler

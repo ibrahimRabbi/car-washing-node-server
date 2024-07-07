@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createServiceController, getServiceController, updateServiceController } from "./services.controller";
+import { createServiceController, deleteServiceController, getServiceController, updateServiceController } from "./services.controller";
 import authentication from "../../middleware/authentication";
 import { serviceUpdateValidation } from "../../middleware/serviceUpdateMiddle";
 
@@ -12,3 +12,5 @@ serviceRoute.get('/', getServiceController)
 serviceRoute.get('/:id', getServiceController)
 
 serviceRoute.put('/:id', serviceUpdateValidation, authentication, updateServiceController)
+
+serviceRoute.delete('/:id', authentication, deleteServiceController)

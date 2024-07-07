@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response, } from "express";
-import { getServicesLogicHandler, servicesLogicHandler, updateServicesLogicHandler } from "./services.services";
+import { deleteServicesLogicHandler, getServicesLogicHandler, servicesLogicHandler, updateServicesLogicHandler } from "./services.services";
 import userModel from "../user/user.model";
+
+
+
 
 export const createServiceController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -31,7 +34,7 @@ export const getServiceController = async (req: Request, res: Response, next: Ne
     let query = {}
 
     if (req.params?.id) {
-     query = { _id: req.params?.id }
+        query = { _id: req.params?.id }
     }
 
 
@@ -55,7 +58,7 @@ export const getServiceController = async (req: Request, res: Response, next: Ne
 //update services data
 
 export const updateServiceController = async (req: Request, res: Response, next: NextFunction) => {
-    
+
     const findUser = await userModel.findOne({ email: req.user.email })
     try {
 
@@ -67,6 +70,29 @@ export const updateServiceController = async (req: Request, res: Response, next:
             success: true,
             statusCode: 200,
             message: "Service update successfully",
+            data: updatedService
+        })
+    } catch (err: any) {
+        next(err)
+    }
+}
+
+
+// delete service
+export const deleteServiceController = async (req: Request, res: Response, next: NextFunction) => {
+     
+    const findUser = await userModel.findOne({ email: req.user.email })
+    try {
+
+        if (findUser?.role === 'user') {
+            throw new Error('unauthorized access: this route only for admin')
+        }
+
+        const updatedService = await deleteServicesLogicHandler(req.params?.id)
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            message: "Service deleted successfully",
             data: updatedService
         })
     } catch (err: any) {

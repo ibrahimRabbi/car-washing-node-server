@@ -15,8 +15,13 @@ export const getServicesLogicHandler = async (query: any) => {
 
 
 export const updateServicesLogicHandler = async (id: string, payload: Partial<Tservice>) => {
-
     const updating = await serviceModel.findByIdAndUpdate(id, payload)
      return updating
+}
+
+
+export const deleteServicesLogicHandler = async (id: string) => {
+    const deleting = await serviceModel.findByIdAndDelete(id)
+    return  deleting
 }
 

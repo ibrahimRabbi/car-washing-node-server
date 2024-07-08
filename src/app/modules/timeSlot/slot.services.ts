@@ -3,17 +3,29 @@ import { soltModel } from "./slot.model";
 
 
 export const createSlotService = async (payload: Tslot) => {
-    const checkSlotExistancy = await soltModel.findOne({ 
+    const checkSlotExistancy = await soltModel.find({ 
         $and: [
             { service: payload.service },
-            { date: payload.date },
-            {startTime:payload.startTime}
+            { date: payload.date }
         ]
-     })
+    })
+    
+    
     
     if (checkSlotExistancy) {
-        throw new Error('this slot already exist')
+
+        checkSlotExistancy.forEach(v => {
+            const existEndTime = new Date(`1971-07-08T${v.endTime}`)
+            const newStrtTime = new Date(`1971-07-08T${payload.startTime}`)
+
+            if (newStrtTime < existEndTime) {
+                throw new Error('this slot already exist choose another slot or date')
+            }
+        })
+          
     }
+
+    
     const inserting = await soltModel.create(payload)
     return inserting
 }

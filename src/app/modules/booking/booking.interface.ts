@@ -4,11 +4,11 @@ type Tbooking = {
     serviceId: Types.ObjectId,
     slotId: Types.ObjectId,
     customerId:Types.ObjectId,
-    vehicleType: string,
+    vehicleType: 'car'| 'truck'| 'SUV'| 'van'| 'motorcycle'| 'bus'| 'electricVehicle'| 'hybridVehicle'| 'bicycle'| 'tractor',
     vehicleBrand: string,
     vehicleModel: string,
     manufacturingYear: string,
-    registrationPlate: string
+    registrationPlate: string,
 }
 
 export default Tbooking

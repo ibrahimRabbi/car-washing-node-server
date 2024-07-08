@@ -21,7 +21,8 @@ app.use('/api/auth', userRoute)
 app.use('/api/services', serviceRoute)
 app.use('/api/services', slotRoute)
 app.use('/api/slots', slotRoute)
-app.use('/api/bookings',bookingRoute)
+app.use('/api/bookings', bookingRoute)
+app.use('/api', bookingRoute)
 
 //error handler
 app.use(globalErrorHandler)

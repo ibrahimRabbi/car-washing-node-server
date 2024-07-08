@@ -17,3 +17,9 @@ export const createSlotService = async (payload: Tslot) => {
     const inserting = await soltModel.create(payload)
     return inserting
 }
+
+
+export const getSlotService = async () => {
+    const finding = await soltModel.find({ isBooked: 'available' }).populate('service')
+    return finding
+}

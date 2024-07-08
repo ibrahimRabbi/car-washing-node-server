@@ -7,6 +7,7 @@ import globalErrorHandler from './app/error/globalErrorHandler';
 import notFound from './app/error/notFoundError';
 import { serviceRoute } from './app/modules/services/services.route';
 import { slotRoute } from './app/modules/timeSlot/slot.route';
+import { bookingRoute } from './app/modules/booking/booking.route';
 
 const app = express()
 
@@ -19,7 +20,8 @@ app.use(express.json())
 app.use('/api/auth', userRoute)
 app.use('/api/services', serviceRoute)
 app.use('/api/services', slotRoute)
-
+app.use('/api/slots', slotRoute)
+app.use('/api/bookings',bookingRoute)
 
 //error handler
 app.use(globalErrorHandler)

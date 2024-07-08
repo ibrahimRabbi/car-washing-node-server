@@ -21,7 +21,7 @@ export const updateServicesLogicHandler = async (id: string, payload: Partial<Ts
 
 
 export const deleteServicesLogicHandler = async (id: string) => {
-    const deleting = await serviceModel.findByIdAndDelete(id)
+    const deleting = await serviceModel.findByIdAndUpdate(id,{isdeleted:true})
     return  deleting
 }
 

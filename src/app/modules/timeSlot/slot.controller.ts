@@ -6,11 +6,14 @@ import userModel from "../user/user.model";
 
 export const createSlotController = async (req: Request, res: Response, next: NextFunction) => {
     
-    const findUser = await userModel.findOne({ email: req.user.email })
+    const findUser = await userModel.findOne({ email: req.user.email }).select('role')
 
     try {
         if (findUser?.role === 'user') {
-            throw new Error('unauthorized access')
+            throw {
+                statusCode: 403,
+                message: 'unauthorized access: this route only for admin'
+            }
         }
 
         const insertedService = await createSlotService(req.body)

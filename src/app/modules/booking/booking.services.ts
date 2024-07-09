@@ -1,12 +1,39 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import Tbooking from "./booking.interface";
 import { bookingModel } from "./booking.model";
+import { soltModel } from "../timeSlot/slot.model";
 
 export const createBookingService = async (payload: Tbooking, userId: Types.ObjectId) => {
-    payload.customerId = userId
+
+    const session = await mongoose.startSession()
+    const getSlot = await soltModel.findById(payload.slotId)
     
-    const booking = await bookingModel.create(payload)
-    return booking
+    try {
+        session.startTransaction()
+
+        if (getSlot?.isBooked === 'booked') {
+            throw {
+                statusCode: 400,
+                message: 'this slot alredy'
+            }
+        }
+        
+        payload.customerId = userId
+        const booking = await bookingModel.create([payload], { new: true, session: session })
+        await soltModel.findByIdAndUpdate(payload.slotId, { isBooked: 'booked' }, { new: true, session })
+
+
+        await session.commitTransaction()
+        await session.endSession()
+        return booking
+
+    } catch (err: any) {
+        await session.abortTransaction()
+        await session.endSession()
+        throw new Error(err)
+    }
+
+    
 }
 
 

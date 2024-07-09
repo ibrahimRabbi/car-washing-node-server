@@ -5,5 +5,5 @@ export type Tslot = {
     date: Date,
     startTime: string,
     endTime: string,
-    isBooked: 'available'| 'full-fill'
+    isBooked: 'available'| 'booked'
 }

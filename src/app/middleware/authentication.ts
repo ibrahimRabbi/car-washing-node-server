@@ -9,18 +9,23 @@ const authentication = async (req: Request, res: Response, next: NextFunction) =
     const sliceToken = token?.split(' ') as string[]
     const finalToken = sliceToken[1]
      
+    try {
+        if (!token) {
+            throw new Error('unthorized user')
+        }
 
-    if (!token) {
-        throw new Error('unthorized user')
+
+        const verified = jwt.verify(finalToken as string, envData.secret_key as string)
+        if (!verified) {
+            throw new Error('unthorized user')
+        }
+        req.user = verified as JwtPayload
+        next()
+    } catch (err: any) {
+        next(err)
     }
 
-
-    const verified = jwt.verify(finalToken as string, envData.secret_key as string)
-    if (!verified) {
-        throw new Error('unauthorized user')
-    }
-    req.user = verified as JwtPayload
-    next()
+   
 }
 
 export default authentication

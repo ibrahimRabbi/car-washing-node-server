@@ -7,12 +7,15 @@ import userModel from "../user/user.model";
 
 export const createServiceController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const findUser = await userModel.findOne({ email: req.user.email })
+    const findUser = await userModel.findOne({ email: req.user.email }).select('role')
 
     try {
 
         if (findUser?.role === 'user') {
-            throw new Error('unauthorized access: this route only for admin')
+            throw {
+                statusCode: 403,
+                message: 'unauthorized access: this route only for admin'
+            }
         }
         const insertedService = await servicesLogicHandler(req.body)
         res.status(200).json({
@@ -21,7 +24,7 @@ export const createServiceController = async (req: Request, res: Response, next:
             message: "service created successfully",
             data: insertedService
         })
-    } catch (err: any) {
+    } catch (err: any) {   
         next(err)
     }
 }
@@ -59,11 +62,14 @@ export const getServiceController = async (req: Request, res: Response, next: Ne
 
 export const updateServiceController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const findUser = await userModel.findOne({ email: req.user.email })
+    const findUser = await userModel.findOne({ email: req.user.email }).select('role')
     try {
 
         if (findUser?.role === 'user') {
-            throw new Error('unauthorized access: this route only for admin')
+            throw {
+                statusCode: 403,
+                message: 'unauthorized access: this route only for admin'
+            }
         }
         const updatedService = await updateServicesLogicHandler(req.params?.id, req.body)
         res.status(200).json({
@@ -80,12 +86,15 @@ export const updateServiceController = async (req: Request, res: Response, next:
 
 // delete service
 export const deleteServiceController = async (req: Request, res: Response, next: NextFunction) => {
-     
-    const findUser = await userModel.findOne({ email: req.user.email })
+
+    const findUser = await userModel.findOne({ email: req.user.email }).select('role')
     try {
 
         if (findUser?.role === 'user') {
-            throw new Error('unauthorized access: this route only for admin')
+            throw {
+                statusCode: 403,
+                    message: 'unauthorized access: this route only for admin'
+            }
         }
 
         const updatedService = await deleteServicesLogicHandler(req.params?.id)

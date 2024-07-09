@@ -10,16 +10,21 @@ export const createSlotService = async (payload: Tslot) => {
         ]
     })
     
-    
-    
-    if (checkSlotExistancy) {
+
+    if (checkSlotExistancy.length) {
 
         checkSlotExistancy.forEach(v => {
+            const existStrtTime = new Date(`1971-07-08T${v.startTime}`)
             const existEndTime = new Date(`1971-07-08T${v.endTime}`)
             const newStrtTime = new Date(`1971-07-08T${payload.startTime}`)
+            const newEndTime = new Date(`1971-07-08T${payload.endTime}`)
 
-            if (newStrtTime < existEndTime) {
-                throw new Error('this slot already exist choose another slot or date')
+            
+            if (newStrtTime < existEndTime && newEndTime > existStrtTime) {
+                throw {
+                    statusCode: 400,
+                    message: 'this slot already exist choose another slot or date'
+                }
             }
         })
           

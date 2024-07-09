@@ -8,27 +8,41 @@ import bcrypt from 'bcrypt'
 
 export const authService = async (payload: Partial<Tuser>) => {
 
-    const checkuserExistancy = await userModel.findOne({ email: payload.email }).select('password')
-    const unpackPass = await bcrypt.compare(payload.password as string, checkuserExistancy?.password as string)
-     
+    const checkuserExistancy = await userModel.findOne({ email: payload.email }).select('password email')
+
+    
+
+    if (checkuserExistancy?.password) {
+        const unpackPass = await bcrypt.compare(payload.password as string, checkuserExistancy?.password as string)
+
+        if (!unpackPass) {
+            throw {
+                statusCode: 401,
+                message: 'invalid password'
+            }
+        }
+    }
 
     if (!checkuserExistancy) {
-        throw new Error('this user is not exist')
+        throw {
+            statusCode: 404,
+            message: 'user is not exist'
+        }
     }
 
     if (checkuserExistancy?.isDeleted) {
-        throw new Error('forbidden user')
+        throw {
+            statusCode: 403,
+            message: 'forbbiden user'
+        }
     }
 
     
-    
-    if (!unpackPass) {
-        throw new Error('invalid password')
-    }
 
 
     const genarateAccessToken = jwt.sign(payload, envData.secret_key as string, { expiresIn: '6h' })
-    return { checkuserExistancy, accessToken:`Bearer ${genarateAccessToken}` }
+    return { checkuserExistancy, accessToken: `Bearer ${genarateAccessToken}` }
+
 
 
 }

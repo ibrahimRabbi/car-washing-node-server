@@ -10,7 +10,10 @@ export const createBookingController = async (req: Request, res: Response, next:
     try {
 
         if (findUser?.role === 'admin') {
-            throw new Error('unauthorized access: this route only for user')
+            throw {
+                statusCode: 403,
+                message: 'unauthorized access'
+            }
         }
 
         const insertedService = await createBookingService(req.body, findUser?._id as Types.ObjectId)
@@ -36,7 +39,10 @@ export const getAllBookingController = async (req: Request, res: Response, next:
     try {
 
         if (findUser?.role === 'user') {
-            throw new Error('unauthorized access: this route only for Admin')
+            throw {
+                statusCode: 403,
+                message: 'unauthorized access: this route only for admin'
+            }
         }
 
         const insertedService = await getAllookingService()
@@ -62,7 +68,10 @@ export const getSingleBookingController = async (req: Request, res: Response, ne
     try {
 
         if (findUser?.role === 'admin') {
-            throw new Error('unauthorized access: this route only for user')
+            throw {
+                statusCode: 403,
+                message: 'unauthorized access: this route only for user'
+            }
         }
 
         const insertedService = await getSingleBookingService(findUser?._id as Types.ObjectId)

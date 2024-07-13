@@ -12,10 +12,7 @@ export const createBookingService = async (payload: Tbooking, userId: Types.Obje
         session.startTransaction()
 
         if (getSlot?.isBooked === 'booked') {
-            throw {
-                statusCode: 400,
-                message: 'this slot alredy'
-            }
+            throw  new Error('this slot already booked')
         }
         
         payload.customerId = userId

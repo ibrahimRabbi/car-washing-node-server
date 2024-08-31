@@ -21,6 +21,7 @@ const authentication = async (req: Request, res: Response, next: NextFunction) =
         }
         req.user = verified as JwtPayload
         next()
+        
     } catch (err: any) {
         next(err)
     }

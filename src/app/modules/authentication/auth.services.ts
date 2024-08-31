@@ -8,9 +8,10 @@ import bcrypt from 'bcrypt'
 
 export const authService = async (payload: Partial<Tuser>) => {
 
-    const checkuserExistancy = await userModel.findOne({ email: payload.email }).select('password email')
+    const checkuserExistancy = await userModel.findOne({ email: payload.email })
 
-    
+    console.log(checkuserExistancy)
+
 
     if (checkuserExistancy?.password) {
         const unpackPass = await bcrypt.compare(payload.password as string, checkuserExistancy?.password as string)
@@ -37,7 +38,7 @@ export const authService = async (payload: Partial<Tuser>) => {
         }
     }
 
-    
+
 
 
     const genarateAccessToken = jwt.sign(payload, envData.secret_key as string, { expiresIn: '6h' })

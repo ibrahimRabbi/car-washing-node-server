@@ -1,4 +1,4 @@
-# University Application Node Server
+# Car washing application Node Server
 
 This is a Node.js server for a CAR WASH application built with TypeScript, Node.js, Mongoose, Joi for validation, and bcrypt for password hashing. The server includes various API routes for managing academic semesters, users, admins, faculty, and offered courses.
 

@@ -2,11 +2,12 @@ import { NextFunction, Request, Response, } from "express";
 import userModel from "../user/user.model";
 import { createBookingService, getAllookingService, getSingleBookingService } from "./booking.services";
 import { Types } from "mongoose";
+import { bookingModel } from "./booking.model";
 
 
 
 export const createBookingController = async (req: Request, res: Response, next: NextFunction) => {
-    const findUser = await userModel.findOne({ email: req.user.email }).select('role')
+    const findUser = await userModel.findOne({ email: req.user.email })
     try {
 
         if (findUser?.role === 'admin') {
@@ -17,6 +18,7 @@ export const createBookingController = async (req: Request, res: Response, next:
         }
 
         const insertedService = await createBookingService(req.body, findUser?._id as Types.ObjectId)
+
         res.status(200).json({
             success: true,
             statusCode: 200,
@@ -35,7 +37,7 @@ export const createBookingController = async (req: Request, res: Response, next:
 export const getAllBookingController = async (req: Request, res: Response, next: NextFunction) => {
 
     const findUser = await userModel.findOne({ email: req.user.email }).select('role')
-    
+
     try {
 
         if (findUser?.role === 'user') {
@@ -64,7 +66,7 @@ export const getAllBookingController = async (req: Request, res: Response, next:
 //get single booking
 export const getSingleBookingController = async (req: Request, res: Response, next: NextFunction) => {
     const findUser = await userModel.findOne({ email: req.user.email }).select('role')
-       
+
     try {
 
         if (findUser?.role === 'admin') {

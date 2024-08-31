@@ -42,8 +42,6 @@ export const authService = async (payload: Partial<Tuser>) => {
 
 
     const genarateAccessToken = jwt.sign(payload, envData.secret_key as string, { expiresIn: '6h' })
-    return { checkuserExistancy, accessToken: `Bearer ${genarateAccessToken}` }
-
-
+    return { checkuserExistancy, accessToken: `${genarateAccessToken}`}
 
 }
